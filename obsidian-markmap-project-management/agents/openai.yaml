@@ -1,0 +1,7 @@
+interface:
+  display_name: "Obsidian Markmap Project Management"
+  short_description: "Maintain Obsidian-only Markmap project maps"
+  default_prompt: "Use $obsidian-markmap-project-management to maintain this project's TASKS.md and Obsidian Markmap view; do not create standalone HTML."
+
+policy:
+  allow_implicit_invocation: false
