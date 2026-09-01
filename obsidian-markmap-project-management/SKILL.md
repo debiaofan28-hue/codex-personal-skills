@@ -22,6 +22,16 @@ Obsidian is the only viewing surface for this skill. Markdown is the source of t
 - Check that the Vault has the Mindmap NextGen/Markmap view plugin enabled before relying on its rendering.
 - After changing `TASKS.md`, ask the user to refresh or reopen the Mindmap tab if the view is stale.
 
+## Mindmap NextGen color setup
+
+- Treat branch coloring as part of the map setup, not as an optional cosmetic detail.
+- For the target Vault, check Mindmap NextGen's coloring settings before rendering:
+  - Coloring approach: `Branch coloring`
+  - Color freeze level: `2`
+- If the current tools can operate the Obsidian settings UI, set those values when they differ. If they cannot, keep working with the file-level settings below and tell the user exactly what to set manually; do not claim the global setting was changed.
+- Keep the same values in the task note's `markmap` frontmatter so the map remains portable and the note overrides a different plugin default.
+- Verify the result as branch colors: top-level branches should differ and deeper descendants should inherit their top-level branch color. Do not confuse this with node text color, which normally follows the Obsidian theme.
+
 ## Update workflow
 
 1. Inspect the applicable project instructions and only the relevant `TASKS.md` headings.
@@ -74,7 +84,7 @@ markmap:
 Use `coloring: branch` with `colorFreezeLevel: 2` to match normal Markmap: each top-level branch keeps its own color and deeper descendants inherit that branch color. Depth-based coloring ignores the freeze-level behavior.
 Use `maxWidth: 0` to keep node text on one line; a positive value forces automatic wrapping at that width.
 
-For an existing note, change only the requested `markmap` properties. Use inline `nodeColor`, `bgColor`, or `color` comments only for deliberate branch emphasis; do not decorate every node.
+For an existing note, change only the requested `markmap` properties. If the note has no `markmap` block and the map is being created or its colors are being repaired, add the compact block above while preserving unrelated frontmatter. Use inline `nodeColor`, `bgColor`, or `color` comments only for deliberate branch emphasis; do not decorate every node.
 
 ## Token and edit discipline
 
