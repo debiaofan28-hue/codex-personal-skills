@@ -24,13 +24,11 @@ Obsidian is the only viewing surface for this skill. Markdown is the source of t
 
 ## Mindmap NextGen color setup
 
-- Treat branch coloring as part of the map setup, not as an optional cosmetic detail.
-- For the target Vault, check Mindmap NextGen's coloring settings before rendering:
-  - Coloring approach: `Branch coloring`
-  - Color freeze level: `2`
-- If the current tools can operate the Obsidian settings UI, set those values when they differ. If they cannot, keep working with the file-level settings below and tell the user exactly what to set manually; do not claim the global setting was changed.
-- Keep the same values in the task note's `markmap` frontmatter so the map remains portable and the note overrides a different plugin default.
-- Verify the result as branch colors: top-level branches should differ and deeper descendants should inherit their top-level branch color. Do not confuse this with node text color, which normally follows the Obsidian theme.
+- Treat Mindmap NextGen's plugin settings as the default source for coloring. Read the current settings and do not overwrite the user's chosen coloring approach or palette.
+- Do not add `coloring`, `color`, or `colorFreezeLevel` to a new task note by default. These file-level keys override the plugin settings and make later plugin changes appear ineffective.
+- If the user explicitly asks to standardize coloring, change the Mindmap NextGen settings when the current tools can operate the Obsidian settings UI. If UI control is unavailable, give the exact manual path and do not claim the global setting was changed.
+- When migrating a note made from an earlier fixed-color version of this skill, remove only the skill-added `coloring`, `color`, and `colorFreezeLevel` keys so plugin settings can take effect. Preserve them when the user deliberately wants a per-note override.
+- Verify that the rendered map follows the active plugin mode. Do not assume branch inheritance unless the plugin is set to `Branch coloring`; do not confuse branch line/circle colors with node text color, which normally follows the Obsidian theme.
 
 ## Update workflow
 
@@ -58,30 +56,17 @@ Obsidian is the only viewing surface for this skill. Markdown is the source of t
 
 ## Markmap frontmatter
 
-For a new task note, use this compact configuration unless the user requests another style:
+For a new task note, use this compact layout configuration unless the user requests another style. Leave coloring to Mindmap NextGen's plugin settings:
 
 ```yaml
 ---
 markmap:
-  coloring: branch
-  color:
-    - "#1f77b4"
-    - "#ff7f0e"
-    - "#2ca02c"
-    - "#d62728"
-    - "#9467bd"
-    - "#8c564b"
-    - "#e377c2"
-    - "#7f7f7f"
-    - "#bcbd22"
-    - "#17becf"
-  colorFreezeLevel: 2
   initialExpandLevel: 4
   maxWidth: 0
 ---
 ```
 
-Use `coloring: branch` with `colorFreezeLevel: 2` to match normal Markmap: each top-level branch keeps its own color and deeper descendants inherit that branch color. Depth-based coloring ignores the freeze-level behavior.
+Do not add `coloring`, `color`, or `colorFreezeLevel` unless the user explicitly requests a per-note color override. When those keys are present, they take precedence over Mindmap NextGen's plugin settings.
 Use `maxWidth: 0` to keep node text on one line; a positive value forces automatic wrapping at that width.
 
 For an existing note, change only the requested `markmap` properties. If the note has no `markmap` block and the map is being created or its colors are being repaired, add the compact block above while preserving unrelated frontmatter. Use inline `nodeColor`, `bgColor`, or `color` comments only for deliberate branch emphasis; do not decorate every node.
